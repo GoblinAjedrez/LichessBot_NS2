@@ -20,57 +20,23 @@ class Rematch_Manager:
         self.rematch_offered: bool = False  # Track if rematch was already offered
 
     def should_offer_rematch(self, game_info: Game_Information, game_result: str, winner: str | None) -> bool:
-        """Determine if we should offer a rematch based on configuration and game outcome."""
-        print(f"Checking rematch conditions for game result: {game_result}, winner: {winner}")
-        
-        if not self.config.rematch.enabled:
-            print(f"Rematch disabled: enabled={self.config.rematch.enabled}")
-            return False
-
+        """Siempre ofrecer revancha, ignorando config/resultado/rating.
+        Se evitan duplicados si ya hay una pendiente y se respeta max_consecutive."""
         opponent_name = self._get_opponent_name(game_info)
         if not opponent_name:
-            print("No opponent name found")
             return False
 
-        # Check if we've reached max consecutive rematches with this opponent
-        current_count = self.rematch_counts.get(opponent_name.lower(), 0)
-        print(f"Rematch count for {opponent_name}: {current_count}/{self.config.rematch.max_consecutive}")
-        
+        opponent_key = opponent_name.lower()
+
+        # Evita repetir oferta si ya hay una revancha pendiente con este rival
+        if self.pending_rematch == opponent_key:
+            return False
+
+        # Respeta el límite de revanchas consecutivas por rival
+        current_count = self.rematch_counts.get(opponent_key, 0)
         if current_count >= self.config.rematch.max_consecutive:
-            print(f"Max consecutive rematches reached for {opponent_name} - STOPPING")
             return False
 
-        # Check if we already have a pending rematch with this opponent
-        if self.pending_rematch == opponent_name.lower():
-            print(f"Rematch already pending with {opponent_name}")
-            return False
-
-        # Check opponent type (human vs bot)
-        is_opponent_bot = self._is_opponent_bot(game_info)
-        if is_opponent_bot and not self.config.rematch.against_bots:
-            print(f"Rematch against bots disabled")
-            return False
-        if not is_opponent_bot and not self.config.rematch.against_humans:
-            print(f"Rematch against humans disabled")
-            return False
-
-        # Check rating difference constraints
-        if not self._check_rating_constraints(game_info):
-            print(f"Rating constraints not met")
-            return False
-
-        # Check game outcome preferences
-        if winner == self.username and not self.config.rematch.offer_on_win:
-            print(f"Rematch on win disabled")
-            return False
-        elif winner and winner != self.username and not self.config.rematch.offer_on_loss:
-            print(f"Rematch on loss disabled")
-            return False
-        elif not winner and not self.config.rematch.offer_on_draw:
-            print(f"Rematch on draw disabled")
-            return False
-
-        print(f"All rematch conditions met for {opponent_name}")
         return True
 
     async def offer_rematch(self, game_info: Game_Information) -> bool:
