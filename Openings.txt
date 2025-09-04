@@ -1,28 +1,13 @@
-# ESTILO PERSONALIZADO — Scotch, Gambito de Rey, Francesa del Avance y India de Rey
+# ESTILO ESTRICTO — Bird siempre con blancas, ...g6 siempre con negras
 
-# BLANCAS — repertorio 1.e4
+# BLANCAS — primera jugada obligatoria 1.f4
+f4
 
-# Apertura Escocesa
-e4 e5 Nf3 Nc6 d4 exd4 Nxd4 Nf6 Nc3 Bb4
-
-# Gambito de Rey aceptado
-e4 e5 f4 exf4 Nf3 g5 h4 g4 Ne5
-
-# Gambito de Rey declinado
-e4 e5 f4 Bc5 Nf3 d6
-
-# NEGRAS — contra 1.e4
-
-# Francesa del Avance
-e4 e6 d4 d5 e5 c5 c3 Nc6 Nf3 Qb6
-
-# NEGRAS — contra 1.d4 / Cf6
-
-# Defensa India de Rey — Variante Clásica
-d4 Nf6 c4 g6 Nc3 Bg7 e4 d6 Nf3 O-O Be2 e5 O-O Nc6
-
-# India de Rey — Ataque Sämisch
-d4 Nf6 c4 g6 Nc3 Bg7 e4 d6 f3 O-O Be3 e5 Nge2 Nc6 Qd2
-
-# India de Rey — Fianchetto
-d4 Nf6 c4 g6 Nf3 Bg7 g3 O-O Bg2 d6 O-O Nbd7 Nc3 e5 e4
+# NEGRAS — primera jugada obligatoria ...g6 contra cualquier apertura
+e4 g6
+d4 g6
+c4 g6
+Nf3 g6
+g3 g6
+b3 g6
+Nc3 g6
