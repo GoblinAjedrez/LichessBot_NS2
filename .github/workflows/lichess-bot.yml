@@ -64,12 +64,12 @@ jobs:
         run: |
           mkdir -p engines
           sudo apt-get update && sudo apt-get install -y unzip
-          # Stockfish
-          curl -L -o stockfish.zip http://abrok.eu/stockfish/latest/linux/stockfish_x64_modern.zip
+          # Stockfish desde GitHub oficial
+          curl -L -o stockfish.zip https://github.com/official-stockfish/Stockfish/releases/latest/download/stockfish-linux-x86-64-avx2.zip
           unzip -o stockfish.zip -d engines/
-          mv engines/stockfish_* engines/stockfish
+          mv engines/stockfish* engines/stockfish
           chmod +x engines/stockfish
-          # Other engines
+          # Otros motores
           if [ -f "engines/fsf" ]; then chmod +x engines/fsf; fi
           if [ -f "engines/ShashChess39" ]; then chmod +x engines/ShashChess39; fi
 
